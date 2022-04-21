@@ -1,20 +1,26 @@
-import "./App.sass";
-//导入路由
-import { Routes, BrowserRouter, Route } from "react-router-dom";
-//导入组件
-import Login from "./pages/Login";
-import Layout from "./pages/Layout";
-function App() {
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// import AuthRoute from "@/components/AuthRoute";
+import routers from "./router";
+
+const App = () => {
   return (
-    <BrowserRouter>
-      <div className="app">
-        <Routes>
-          <Route path="/" element={<Layout />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-        </Routes>
-      </div>
-    </BrowserRouter>
+    <Router>
+      <Routes>
+        {" "}
+        {routers.map((item, index) => {
+          return (
+            <Route
+              key={index}
+              exact
+              path={item.path}
+              element={<item.component />} // 不是老版本的：component 或 render
+            />
+          );
+        })}
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
