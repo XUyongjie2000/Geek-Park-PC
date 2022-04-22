@@ -6,6 +6,7 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "@/store/actions";
+
 const Login = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
@@ -23,6 +24,7 @@ const Login = () => {
     <div className="login">
       <div className="login-container">
         <img className="login-logo" src={logo} alt=""></img>
+
         <Form
           onFinish={onFinish}
           initialValues={{

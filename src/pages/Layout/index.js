@@ -1,4 +1,9 @@
+import styles from "../Login/index.module.sass";
 const Layout = () => {
-  return <div>首页</div>;
+  return (
+    <div>
+      <span className={styles.a}>Login</span>
+    </div>
+  );
 };
 export default Layout;

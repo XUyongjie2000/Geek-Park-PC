@@ -4,7 +4,6 @@ export const AuthRoute = () => {
   const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem("itcast_geek_pc");
-
     if (token) {
       navigate("/home");
     } else {
