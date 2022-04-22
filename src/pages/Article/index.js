@@ -13,7 +13,24 @@ import BreadcrumbItem from "antd/lib/breadcrumb/BreadcrumbItem";
 import FormItem from "antd/lib/form/FormItem";
 import { Link } from "react-router-dom";
 import styles from "./index.module.sass";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getChannels, getArticles } from "@/store/actions";
 const Article = () => {
+  const { channels } = useSelector((state) => {
+    return state.todos.article;
+  });
+  console.log(1111);
+  console.log(channels);
+  // console.log(channels);
+  //组件第一次渲染dispatch 分发action
+  const dispatch = useDispatch();
+  useEffect(() => {
+    //获取频道数据
+    dispatch(getChannels());
+    //获取文章数据
+    dispatch(getArticles({}));
+  }, [dispatch]);
   return (
     <div className={styles.root}>
       <Card
@@ -40,8 +57,11 @@ const Article = () => {
           </FormItem>
           <FormItem label="频道" name="channel_id">
             <Select style={{ width: 288 }}>
-              <Select.Option value={1}>Java</Select.Option>
-              <Select.Option value={2}>前端</Select.Option>
+              {channels.map((item) => (
+                <Select.Option key={item.id} value={item.id}>
+                  {item.name}
+                </Select.Option>
+              ))}
             </Select>
           </FormItem>
           <ConfigProvider locale={zhCN}>

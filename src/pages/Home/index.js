@@ -6,21 +6,24 @@ import {
   FileWordOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
 const Home = () => {
+  const location = useLocation();
+  // 激活菜单的key
+  let defaultKey = location.pathname;
   return (
     <Layout className="geek-layout">
       <Sider width={148}>
         <div className="logo">GEEK</div>
-        <Menu defaultSelectedKeys={["1"]} mode="inline" theme="dark">
-          <Menu.Item icon={<PieChartOutlined />} key="1">
+        <Menu selectedKeys={[defaultKey]} mode="inline" theme="dark">
+          <Menu.Item icon={<PieChartOutlined />} key="/home/dashboard">
             <Link to="/home/dashboard">数据面板</Link>
           </Menu.Item>
-          <Menu.Item icon={<SolutionOutlined />} key="2">
+          <Menu.Item icon={<SolutionOutlined />} key="/home/article">
             <Link to="/home/article">内容管理</Link>
           </Menu.Item>
-          <Menu.Item icon={<FileWordOutlined />} key="3">
+          <Menu.Item icon={<FileWordOutlined />} key="/home/publish">
             <Link to="/home/publish">发布文章</Link>
           </Menu.Item>
         </Menu>
