@@ -51,13 +51,14 @@ const Home = () => {
       </Layout>
       <Routes>
         <Route
-          path="/home/*"
+          path="/home"
           exact
-          render={() => <Navigate to="/dashboard" />}
-        ></Route>
-        <Route path="/dashboard" element={Dashboard} />
-        <Route path="/article" element={Article} />
-        <Route path="/publish/:id?" element={Publish} />
+          render={() => <Navigate to="/home/dashboard" />}
+        >
+          <Route path="/home/*/dashboard" element={Dashboard} />
+          <Route path="/home/*/article" element={Article} />
+          <Route path="/home/*/publish/:id?" element={Publish} />
+        </Route>
       </Routes>
     </Layout>
   );
