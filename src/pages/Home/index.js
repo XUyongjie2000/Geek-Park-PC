@@ -1,5 +1,4 @@
 import { Layout, Menu, Popconfirm, Button } from "antd";
-import { Routes, Route, Navigate } from "react-router-dom";
 import "./index.sass";
 import {
   PieChartOutlined,
@@ -7,11 +6,7 @@ import {
   FileWordOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
-//导入路由
-import Dashboard from "../Dashboard";
-import Article from "../Article";
-import Publish from "../Publish";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
 const Home = () => {
   return (
@@ -20,13 +15,13 @@ const Home = () => {
         <div className="logo">GEEK</div>
         <Menu defaultSelectedKeys={["1"]} mode="inline" theme="dark">
           <Menu.Item icon={<PieChartOutlined />} key="1">
-            <Link to="/dashboard">数据面板</Link>
+            <Link to="/home/dashboard">数据面板</Link>
           </Menu.Item>
           <Menu.Item icon={<SolutionOutlined />} key="2">
-            <Link to="/article">内容管理</Link>
+            <Link to="/home/article">内容管理</Link>
           </Menu.Item>
           <Menu.Item icon={<FileWordOutlined />} key="3">
-            <Link to="/publish">发布文章</Link>
+            <Link to="/home/publish">发布文章</Link>
           </Menu.Item>
         </Menu>
       </Sider>
@@ -47,19 +42,10 @@ const Home = () => {
             </Popconfirm>
           </div>
         </Header>
-        <Content>内容</Content>
+        <Content>
+          <Outlet />
+        </Content>
       </Layout>
-      <Routes>
-        <Route
-          path="/home"
-          exact
-          render={() => <Navigate to="/home/dashboard" />}
-        >
-          <Route path="/home/*/dashboard" element={Dashboard} />
-          <Route path="/home/*/article" element={Article} />
-          <Route path="/home/*/publish/:id?" element={Publish} />
-        </Route>
-      </Routes>
     </Layout>
   );
 };

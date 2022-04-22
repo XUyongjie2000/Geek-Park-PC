@@ -1,4 +1,4 @@
-import styles from "../Login/index.module.sass";
+import styles from "../Login/";
 const Layout = () => {
   return (
     <div>

@@ -1,30 +1,37 @@
-import Layout from "@/pages/Layout";
+// import Layout from "@/pages/Layout";
 import Login from "@/pages/Login";
-import { AuthRoute } from "@/components/AuthRoute";
+// import { AuthRoute } from "@/components/AuthRoute";
 import Home from "@/pages/Home";
 import Dashboard from "@/pages/Dashboard";
+import { useRoutes } from "react-router";
+import Layout from "@/pages/Layout";
+import Article from "@/pages/Article";
+import Publish from "@/pages/Publish";
 const routers = [
+  // {
+  //   title: "auth",
+  //   path: "/",
+  //   component: AuthRoute,
+  // },
   {
-    title: "auth",
     path: "/",
-    component: AuthRoute,
+    element: <Layout />,
   },
   {
-    title: "Layout",
-    path: "/",
-    component: Layout,
-  },
-  {
-    title: "Home",
-    path: "/home",
-    component: Home,
-    children: [{ path: "/dashboard", element: <Dashboard /> }],
-  },
-  {
-    title: "Login",
     path: "/login",
-    component: Login,
+    element: <Login />,
+  },
+  {
+    path: "/home",
+    element: <Home />,
+    children: [
+      { path: "dashboard", element: <Dashboard /> },
+      { path: "article", element: <Article /> },
+      { path: "publish", element: <Publish /> },
+    ],
   },
 ];
 
-export default routers;
+export default function AppRoute() {
+  return useRoutes(routers);
+}
