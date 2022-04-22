@@ -9,6 +9,14 @@ export const user = (state = initialState, action) => {
         ...state,
         token: action.payload,
       };
+    case "user/getUserInfo":
+      console.log(1);
+      return {
+        ...state,
+        name: action.payload,
+      };
+    // case "user/getUserInfo":
+
     default:
       return state;
   }

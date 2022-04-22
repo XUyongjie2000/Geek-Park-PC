@@ -20,17 +20,15 @@ const Article = () => {
   const { channels } = useSelector((state) => {
     return state.todos.article;
   });
-  console.log(1111);
-  console.log(channels);
   // console.log(channels);
   //组件第一次渲染dispatch 分发action
-  const dispatch = useDispatch();
-  useEffect(() => {
-    //获取频道数据
-    dispatch(getChannels());
-    //获取文章数据
-    dispatch(getArticles({}));
-  }, [dispatch]);
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   //获取频道数据
+  //   dispatch(getChannels());
+  //   //获取文章数据
+  //   dispatch(getArticles({}));
+  // }, [dispatch]);
   return (
     <div className={styles.root}>
       <Card

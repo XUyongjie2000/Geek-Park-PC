@@ -7,8 +7,22 @@ import {
   LogoutOutlined,
 } from "@ant-design/icons";
 import { Link, Outlet, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getUserInfo } from "@/store/actions";
 const { Header, Sider, Content } = Layout;
+//获取个人信息
 const Home = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.todos.user);
+  console.log(user, "user");
+  useEffect(() => {
+    try {
+      dispatch(getUserInfo());
+    } catch (e) {
+      console.log(e);
+    }
+  }, [dispatch]);
   const location = useLocation();
   // 激活菜单的key
   let defaultKey = location.pathname;
@@ -31,8 +45,9 @@ const Home = () => {
       <Layout>
         <Header>
           <span style={{ fontSize: 16 }}>极客园自媒体端</span>
-          <div>
-            <span>{"张三"}</span>
+          <div className="user-info">
+            <span className="user-name">{user.name}</span>
+
             <Popconfirm
               placement="bottomRight"
               title="您确认退出极客园自媒体端吗？"

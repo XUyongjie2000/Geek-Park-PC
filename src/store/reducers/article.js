@@ -9,16 +9,13 @@ const initialState = {
 };
 
 const article = (state = initialState, action) => {
-  console.log(action.type === "article/setChannels");
   if (action.type === "article/setChannels") {
-    console.log(1);
     return {
       ...state,
       channels: action.payload,
     };
   }
   if (action.type === "article/setArticles") {
-    console.log(2);
     return {
       ...state,
       ...action.payload,

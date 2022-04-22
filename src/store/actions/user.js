@@ -1,4 +1,4 @@
-import { setToken, http } from "@/utils";
+import { setToken, http, getToken } from "@/utils";
 export const login = (mobile, code) => {
   return async (dispatch) => {
     // const res = await axios.post(
@@ -18,5 +18,16 @@ export const login = (mobile, code) => {
     setToken(data.token);
     // localStorage.setItem("geek-pc-token", token);
     dispatch({ type: "user/setToken", payload: data.token });
+  };
+};
+export const getUserInfo = () => {
+  return async (dispatch, getState) => {
+    const data = await http.get("/user/profile", {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    });
+    console.log(data.name);
+    dispatch({ type: "user/getUserInfo", payload: data.name });
   };
 };
