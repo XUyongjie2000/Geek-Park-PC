@@ -4,9 +4,10 @@ import Login from "@/pages/Login";
 import Home from "@/pages/Home";
 import Dashboard from "@/pages/Dashboard";
 import { useRoutes } from "react-router";
-import Layout from "@/pages/Layout";
+// import Layout from "@/pages/Layout";
 import Article from "@/pages/Article";
 import Publish from "@/pages/Publish";
+import AuthGuardOutlet from "@/components/AuthRoute";
 const routers = [
   // {
   //   title: "auth",
@@ -15,7 +16,7 @@ const routers = [
   // },
   {
     path: "/",
-    element: <Layout />,
+    element: <AuthGuardOutlet />,
   },
   {
     path: "/login",
