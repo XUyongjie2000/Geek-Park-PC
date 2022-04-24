@@ -18,7 +18,7 @@ export const getUserInfo = () => {
     //   },
     // });
     const data = await http.get("/user/profile");
-    console.log(data.name);
+    //console.log(data.name);
     dispatch({ type: "user/getUserInfo", payload: data.name });
   };
 };

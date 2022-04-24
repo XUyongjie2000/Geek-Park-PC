@@ -10,7 +10,7 @@ http.interceptors.request.use(
   (config) => {
     // 对config进行修改，每次请求前做的事情
     const state = store.getState();
-    console.log(state.todos.user.token, "11111");
+    //console.log(state.todos.user.token, "11111");
     if (state.todos.user.token) {
       config.headers.Authorization = `Bearer ${state.todos.user.token}`;
     }

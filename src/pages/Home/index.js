@@ -22,22 +22,27 @@ const Home = () => {
   //获取个人信息
   const dispatch = useDispatch();
   const user = useSelector((state) => state.todos.user);
-  console.log(user, "user");
+  //console.log(user, "user");
   useEffect(() => {
     try {
       dispatch(getUserInfo());
     } catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }, [dispatch]);
   const location = useLocation();
   // 激活菜单的key
   let defaultKey = location.pathname;
+  console.log("selectedKeys", location);
   return (
     <Layout className="geek-layout">
       <Sider width={148}>
         <div className="logo">GEEK</div>
-        <Menu selectedKeys={[defaultKey]} mode="inline" theme="dark">
+        <Menu
+          selectedKeys={[defaultKey, defaultKey.match(/\/\w+\/\w+/)[0]]}
+          mode="inline"
+          theme="dark"
+        >
           <Menu.Item icon={<PieChartOutlined />} key="/home/dashboard">
             <Link to="/home/dashboard">数据面板</Link>
           </Menu.Item>

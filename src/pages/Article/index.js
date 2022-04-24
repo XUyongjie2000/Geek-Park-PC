@@ -29,7 +29,7 @@ const Article = () => {
   //编辑
   const navigator = useNavigate();
   const editArticleFn = (id) => {
-    navigator(`/publish/${id}`);
+    navigator(`/home/publish/${id}`);
   };
   //删除
   const delArticleFn = (id) => {
@@ -77,7 +77,7 @@ const Article = () => {
       params.current.end_pubdate = undefined;
     }
     params.current.page = 1;
-    console.log(params, "11");
+    //console.log(params, "11");
     dispatch(getArticles(params.current));
   };
   //阅读状态数据
@@ -92,7 +92,7 @@ const Article = () => {
       return state.todos.article;
     }
   );
-  console.log(results, "results");
+  //console.log(results, "results");
   // console.log(channels);
   //组件第一次渲染dispatch 分发action
   const dispatch = useDispatch();

@@ -26,9 +26,13 @@ const routers = [
     path: "/home",
     element: <Home />,
     children: [
-      { path: "dashboard", element: <Dashboard /> },
+      { path: "dashboard", routeName: "abc", element: <Dashboard /> },
       { path: "article", element: <Article /> },
-      { path: "publish", element: <Publish /> },
+      {
+        path: "publish",
+        element: <Publish />,
+        children: [{ path: ":id", element: <Publish /> }],
+      },
     ],
   },
 ];

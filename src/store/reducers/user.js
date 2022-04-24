@@ -10,7 +10,7 @@ export const user = (state = initialState, action) => {
         token: action.payload,
       };
     case "user/getUserInfo":
-      console.log(1);
+      //console.log(1);
       return {
         ...state,
         name: action.payload,

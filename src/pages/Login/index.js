@@ -17,7 +17,7 @@ const Login = () => {
       message.success("登陆成功");
       history("/home");
     } catch (e) {
-      console.log(e);
+      //console.log(e);
       message.error(e.response?.data?.message || "登陆失败");
     }
   };
