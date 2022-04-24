@@ -11,41 +11,74 @@ import {
   Space,
   Tag,
   Table,
+  Modal,
+  message,
 } from "antd";
 import zhCN from "antd/lib/locale/zh_CN";
 import BreadcrumbItem from "antd/lib/breadcrumb/BreadcrumbItem";
 import FormItem from "antd/lib/form/FormItem";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./index.module.sass";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { getArticles, getChannels } from "@/store/actions";
+import { useEffect, useRef } from "react";
+import { delArticle, getArticles, getChannels } from "@/store/actions";
 import defaultImg from "@/assets/error.png";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 const Article = () => {
+  //编辑
+  const navigator = useNavigate();
+  const editArticleFn = (id) => {
+    navigator(`/publish/${id}`);
+  };
+  //删除
+  const delArticleFn = (id) => {
+    Modal.confirm({
+      title: "您是否确认删除该文章?",
+      cancelText: "取消",
+      okText: "确认",
+      onOk: async () => {
+        // console.log(id);
+        await dispatch(delArticle(id));
+        await dispatch(getArticles(params.current));
+        message.success("删除成功");
+      },
+    });
+  };
+  //请求参数
+  const params = useRef({
+    page: 1,
+    per_page: 20,
+    channel_id: undefined,
+    status: undefined,
+    begin_pubdate: undefined,
+    end_pubdate: undefined,
+  });
   //改变分页和size重新查询
   const onPageChange = (page, pageSize) => {
-    const params = {};
-    params.page = page;
-    params.per_page = pageSize;
-    dispatch(getArticles(params));
+    params.current.page = page;
+    params.current.per_page = pageSize;
+    dispatch(getArticles(params.current));
   };
   //改变筛选条件
   const onFinish = (values) => {
     // console.log(value);
-    const params = {};
-    params.status = values.status;
-    params.channel_id = values.channel_id;
+    params.current.status = values.status;
+    params.current.channel_id = values.channel_id;
     if (values.dateArr) {
-      params.begin_pubdate = values.dateArr[0].format("YYYY-MM-DD HH:mm:ss");
-      params.end_pubdate = values.dateArr[1].format("YYYY-MM-DD HH:mm:ss");
+      params.current.begin_pubdate = values.dateArr[0].format(
+        "YYYY-MM-DD HH:mm:ss"
+      );
+      params.current.end_pubdate = values.dateArr[1].format(
+        "YYYY-MM-DD HH:mm:ss"
+      );
     } else {
-      params.begin_pubdate = undefined;
-      params.end_pubdate = undefined;
+      params.current.begin_pubdate = undefined;
+      params.current.end_pubdate = undefined;
     }
+    params.current.page = 1;
     console.log(params, "11");
-    dispatch(getArticles(params));
+    dispatch(getArticles(params.current));
   };
   //阅读状态数据
   const statusLabel = [
@@ -67,7 +100,7 @@ const Article = () => {
     //获取频道数据
     dispatch(getChannels());
     //获取文章数据
-    dispatch(getArticles({}));
+    dispatch(getArticles(params.current));
   }, [dispatch]);
   const columns = [
     {
@@ -120,10 +153,18 @@ const Article = () => {
     {
       title: "操作",
       key: "action",
-      render: () => (
+      render: (text, record) => (
         <Space size="middle">
-          <Button type="link" icon={<EditOutlined />} />
-          <Button type="link" icon={<DeleteOutlined />} />
+          <Button
+            onClick={() => editArticleFn(record.id)}
+            type="link"
+            icon={<EditOutlined />}
+          />
+          <Button
+            onClick={() => delArticleFn(record.id)}
+            type="link"
+            icon={<DeleteOutlined />}
+          />
         </Space>
       ),
     },

@@ -15,3 +15,9 @@ export const getArticles = (params) => {
     console.log(data, "data");
   };
 };
+//删除文章
+export const delArticle = (id) => {
+  return async (dispatch) => {
+    await http.delete("mp/articles/" + id);
+  };
+};
