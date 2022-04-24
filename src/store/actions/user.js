@@ -1,4 +1,4 @@
-import { setToken, http, getToken, clearToken } from "@/utils";
+import { setToken, http, clearToken } from "@/utils";
 export const login = (mobile, code) => {
   return async (dispatch) => {
     const data = await http.post("/authorizations", {
@@ -12,11 +12,12 @@ export const login = (mobile, code) => {
 };
 export const getUserInfo = () => {
   return async (dispatch, getState) => {
-    const data = await http.get("/user/profile", {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    });
+    // const data = await http.get("/user/profile", {
+    //   headers: {
+    //     Authorization: `Bearer ${getToken()}`,
+    //   },
+    // });
+    const data = await http.get("/user/profile");
     console.log(data.name);
     dispatch({ type: "user/getUserInfo", payload: data.name });
   };

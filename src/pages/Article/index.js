@@ -13,20 +13,22 @@ import BreadcrumbItem from "antd/lib/breadcrumb/BreadcrumbItem";
 import FormItem from "antd/lib/form/FormItem";
 import { Link } from "react-router-dom";
 import styles from "./index.module.sass";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getArticles, getChannels } from "@/store/actions";
 const Article = () => {
   const { channels } = useSelector((state) => {
     return state.todos.article;
   });
   // console.log(channels);
   //组件第一次渲染dispatch 分发action
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   //获取频道数据
-  //   dispatch(getChannels());
-  //   //获取文章数据
-  //   dispatch(getArticles({}));
-  // }, [dispatch]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    //获取频道数据
+    dispatch(getChannels());
+    //获取文章数据
+    dispatch(getArticles({}));
+  }, [dispatch]);
   return (
     <div className={styles.root}>
       <Card

@@ -12,5 +12,6 @@ export const getArticles = (params) => {
   return async (dispatch) => {
     const data = await http.get("mp/articles", { params });
     dispatch({ type: "article/setArticles", payload: data });
+    console.log(data, "data");
   };
 };

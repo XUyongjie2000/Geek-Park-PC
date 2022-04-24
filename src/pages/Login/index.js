@@ -17,6 +17,7 @@ const Login = () => {
       message.success("登陆成功");
       history("/home");
     } catch (e) {
+      console.log(e);
       message.error(e.response?.data?.message || "登陆失败");
     }
   };
@@ -70,7 +71,6 @@ const Login = () => {
             rules={[
               {
                 validator: (_, value) => {
-                  console.log(value);
                   if (value === true) return Promise.resolve();
                   else return Promise.reject(new Error("请勾选我已阅读同意"));
                 },
