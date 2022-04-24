@@ -13,9 +13,7 @@ import BreadcrumbItem from "antd/lib/breadcrumb/BreadcrumbItem";
 import FormItem from "antd/lib/form/FormItem";
 import { Link } from "react-router-dom";
 import styles from "./index.module.sass";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { getChannels, getArticles } from "@/store/actions";
+import { useSelector } from "react-redux";
 const Article = () => {
   const { channels } = useSelector((state) => {
     return state.todos.article;

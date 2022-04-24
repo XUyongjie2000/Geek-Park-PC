@@ -1,4 +1,4 @@
-import { setToken, http, getToken } from "@/utils";
+import { setToken, http, getToken, clearToken } from "@/utils";
 export const login = (mobile, code) => {
   return async (dispatch) => {
     // const res = await axios.post(
@@ -29,5 +29,14 @@ export const getUserInfo = () => {
     });
     console.log(data.name);
     dispatch({ type: "user/getUserInfo", payload: data.name });
+  };
+};
+//清除token
+export const logout = () => {
+  return (dispatch, getState) => {
+    clearToken();
+    //清除token和name
+    dispatch({ type: "login/setToken", payload: "" });
+    dispatch({ type: "login/profile", payload: "" });
   };
 };

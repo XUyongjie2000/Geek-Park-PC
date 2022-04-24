@@ -6,13 +6,20 @@ import {
   FileWordOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getUserInfo } from "@/store/actions";
+import { getUserInfo, logout } from "@/store/actions";
 const { Header, Sider, Content } = Layout;
-//获取个人信息
+
 const Home = () => {
+  //退出登录
+  const navigator = useNavigate();
+  const onLogout = () => {
+    dispatch(logout());
+    navigator("/login");
+  };
+  //获取个人信息
   const dispatch = useDispatch();
   const user = useSelector((state) => state.todos.user);
   console.log(user, "user");
@@ -53,6 +60,7 @@ const Home = () => {
               title="您确认退出极客园自媒体端吗？"
               okText="确认"
               cancelText="取消"
+              onConfirm={onLogout}
             >
               <Button type="link" icon={<LogoutOutlined />}>
                 退出
