@@ -1,4 +1,9 @@
-import { addArticle, getArticle, getChannels } from "@/store/actions";
+import {
+  addArticle,
+  editArticle,
+  getArticle,
+  getChannels,
+} from "@/store/actions";
 import {
   Breadcrumb,
   Card,
@@ -36,13 +41,17 @@ const Publish = () => {
         setType(cover.type);
         console.log(cover, "1111");
         setFileList(cover.images.map((item) => ({ url: item })));
+      } else {
+        setType(1);
+        setFileList([]);
+        form.resetFields();
       }
     };
     setFormData();
-  }, [dispatch, form]);
+  }, [dispatch, form, params]);
   //校验封面类和图片张数
   const navigator = useNavigate();
-  const onFinish = async (values) => {
+  const onFinish = async (values, draft = false) => {
     if (type !== fileList.length) {
       return message.warning("请按照选择的封面类型上传图片");
     }
@@ -52,11 +61,20 @@ const Publish = () => {
       cover: {
         type,
         //后台需要[string]类型
-        images: fileList.map((item) => item.response.data.url),
+        images: fileList.map((item) => {
+          return item?.response?.data?.url || item.url;
+        }),
       },
     };
-    //添加
-    await dispatch(addArticle(data));
+    if (params.id) {
+      //编辑
+      data.id = params.id;
+      await dispatch(editArticle(data, draft));
+    } else {
+      //添加
+      await dispatch(addArticle(data, draft));
+    }
+    message.success("保存成功");
     navigator("/home/article");
   };
   //根据封面类型 限制上图图片的张数
@@ -76,6 +94,16 @@ const Publish = () => {
   useEffect(() => {
     dispatch(getChannels());
   }, [dispatch]);
+  //存入草稿
+  const saveDarft = async () => {
+    console.log(111);
+    try {
+      const values = await form.validateFields();
+      onFinish(values, true);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <div className={styles.root}>
       <Card
@@ -153,8 +181,9 @@ const Publish = () => {
           <Form.Item wrapperCol={{ offset: 4 }}>
             <Space>
               <Button type="primary" htmlType="submit">
-                发表文章
+                {params.id ? "修改文章" : "发表文章"}
               </Button>
+              <Button onClick={saveDarft}>存入草稿</Button>
             </Space>
           </Form.Item>
         </Form>
