@@ -21,3 +21,9 @@ export const delArticle = (id) => {
     await http.delete("mp/articles/" + id);
   };
 };
+//文章提交
+export const addArticle = (data, draft = false) => {
+  return async (dispatch) => {
+    await http.post(`mp/articles?draft=${false}`, data);
+  };
+};

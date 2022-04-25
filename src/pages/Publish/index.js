@@ -1,4 +1,4 @@
-import { getChannels } from "@/store/actions";
+import { addArticle, getChannels } from "@/store/actions";
 import {
   Breadcrumb,
   Card,
@@ -14,7 +14,7 @@ import {
 import BreadcrumbItem from "antd/lib/breadcrumb/BreadcrumbItem";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PlusOutlined } from "@ant-design/icons";
 import styles from "./index.module.sass";
 // 富文本
@@ -22,10 +22,23 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 const Publish = () => {
   //校验封面类和图片张数
+  const navigator = useNavigate();
   const onFinish = async (values) => {
     if (type !== fileList.length) {
       return message.warning("请按照选择的封面类型上传图片");
     }
+    //组织提交数据
+    const data = {
+      ...values,
+      cover: {
+        type,
+        //后台需要[string]类型
+        images: fileList.map((item) => item.response.data.url),
+      },
+    };
+    //添加
+    await dispatch(addArticle(data));
+    navigator("/home/article");
   };
   //根据封面类型 限制上图图片的张数
   const [fileList, setFileList] = useState([]);
