@@ -1,4 +1,4 @@
-import { addArticle, getChannels } from "@/store/actions";
+import { addArticle, getArticle, getChannels } from "@/store/actions";
 import {
   Breadcrumb,
   Card,
@@ -14,13 +14,32 @@ import {
 import BreadcrumbItem from "antd/lib/breadcrumb/BreadcrumbItem";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { PlusOutlined } from "@ant-design/icons";
 import styles from "./index.module.sass";
 // 富文本
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 const Publish = () => {
+  //编辑自动填充
+  const params = useParams();
+  const [form] = Form.useForm();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const setFormData = async () => {
+      console.log(params, "params");
+      if (params.id) {
+        const { title, cover, content, channel_id } = await dispatch(
+          getArticle(params.id)
+        );
+        form.setFieldsValue({ title, content, channel_id });
+        setType(cover.type);
+        console.log(cover, "1111");
+        setFileList(cover.images.map((item) => ({ url: item })));
+      }
+    };
+    setFormData();
+  }, [dispatch, form]);
   //校验封面类和图片张数
   const navigator = useNavigate();
   const onFinish = async (values) => {
@@ -53,7 +72,7 @@ const Publish = () => {
   };
   //频道数据
   const channels = useSelector((state) => state.todos.article.channels);
-  const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getChannels());
   }, [dispatch]);
@@ -68,11 +87,13 @@ const Publish = () => {
             <BreadcrumbItem>
               <Link to="/home/article">内容管理</Link>
             </BreadcrumbItem>
-            <BreadcrumbItem>发布文章</BreadcrumbItem>
+            <BreadcrumbItem>
+              {params.id ? "修改文章" : "发布文章"}
+            </BreadcrumbItem>
           </Breadcrumb>
         }
       >
-        <Form onFinish={onFinish} labelCol={{ span: 4 }}>
+        <Form onFinish={onFinish} labelCol={{ span: 4 }} form={form}>
           <Form.Item
             label="文章标题"
             name="title"

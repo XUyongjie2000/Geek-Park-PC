@@ -33,7 +33,7 @@ const Home = () => {
   const location = useLocation();
   // 激活菜单的key
   let defaultKey = location.pathname;
-  console.log("selectedKeys", location);
+  // console.log("selectedKeys", location);
   return (
     <Layout className="geek-layout">
       <Sider width={148}>

@@ -27,3 +27,15 @@ export const addArticle = (data, draft = false) => {
     await http.post(`mp/articles?draft=${false}`, data);
   };
 };
+//文章合并修改
+export const editArticle = (data, draft = false) => {
+  return async (dispatch) => {
+    await http.put(`mp/articles/${data.id}?draft=${draft}`, data);
+  };
+};
+export const getArticle = (id) => {
+  return async (dispatch) => {
+    const data = await http.get("mp/articles/" + id);
+    return data;
+  };
+};
