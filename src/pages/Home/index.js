@@ -38,11 +38,8 @@ const Home = () => {
     <Layout className="geek-layout">
       <Sider width={148}>
         <div className="logo">GEEK</div>
-        <Menu
-          selectedKeys={[defaultKey, defaultKey.match(/\/\w+\/\w+/)[0]]}
-          mode="inline"
-          theme="dark"
-        >
+        {/* , defaultKey.match(/\/\w+\/\w+/)[0] */}
+        <Menu selectedKeys={[defaultKey]} mode="inline" theme="dark">
           <Menu.Item icon={<PieChartOutlined />} key="/home/dashboard">
             <Link to="/home/dashboard">数据面板</Link>
           </Menu.Item>
